@@ -67,7 +67,7 @@ public class WagMinigame : MinigameBase
         if (statusText != null)
             statusText.text = "Done! :D";
         Debug.Log("Wag MG complete!");
-        MinigameBase.Instance.OnMGComplete();   // fix needed
+        Complete(true);
     }
 
     // call from gamemanager to reset between rounds
