@@ -19,25 +19,26 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance { get; private set; }
 
     void SetState(MGState newState){
-    curState = newState;
-    switch(newState){
-        case MGState.IDLE:
-            HandleIdle();
-            break;
-        case MGState.INTRO:
-            HandleIntro();
-            break;
-        case MGState.PLAYING:
-            HandlePlaying();
-            break;
-        case MGState.RESULT:
-            HandleResult();
-            break;
-        case MGState.GAMEOVER:
-            HandleGameover();
-            break;
+        Debug.Log($"State: {curState} -> {newState}");
+        curState = newState;
+        switch(newState){
+            case MGState.IDLE:
+                HandleIdle();
+                break;
+            case MGState.INTRO:
+                HandleIntro();
+                break;
+            case MGState.PLAYING:
+                HandlePlaying();
+                break;
+            case MGState.RESULT:
+                HandleResult();
+                break;
+            case MGState.GAMEOVER:
+                HandleGameover();
+                break;
+        }
     }
-}
 
     void Awake(){
         if (Instance != null && Instance != this){
@@ -57,6 +58,10 @@ public class GameManager : MonoBehaviour
     [Header("Minigame Pool")]
     public MinigameBase[] minigames;
 
+    // temporary
+    [Header("UI")]
+    public GameObject StartButton;
+
     private MinigameBase activeMinigame;
 
     private int lives;
@@ -68,12 +73,14 @@ public class GameManager : MonoBehaviour
     private string lastPlayedGame;  // no repeats (fingers crossed)
 
     public void StartGame(){
+        StartButton.SetActive(false);
         lives = startingLives;
         round = 0;
         score = 0;
         speedTier = 0;
-        SetState(MGState.IDLE);
+        //SetState(MGState.IDLE);
         StartNextRound();
+        
     }
 
     void StartNextRound(){
@@ -90,6 +97,10 @@ public class GameManager : MonoBehaviour
 
     MinigameBase PickMinigame(){
         MinigameBase[] choices = minigames.Where(m => m != activeMinigame).ToArray();
+
+        // if all minigames were filtered out, use full pool
+        if (choices.Length == 0)
+            choices = minigames;
 
         return choices[Random.Range(0, choices.Length)];
     }
@@ -108,6 +119,7 @@ public class GameManager : MonoBehaviour
     }
 
     void Update(){
+
         if (!timerRunning) return;
 
         timer -= Time.deltaTime;
@@ -120,7 +132,7 @@ public class GameManager : MonoBehaviour
     }
 
     void HandleIdle(){
-        
+        StartNextRound();
     }
 
     void HandleIntro(){
@@ -142,6 +154,8 @@ public class GameManager : MonoBehaviour
     }
 
     void HandleMGComplete(bool success){
+        Debug.Log($"Round {round} complete - success: {success}, lives {lives}, score: {score}");
+
         timerRunning = false;
         //activeMinigame.OnMGComplete -= HandleMGComplete;
 
@@ -164,6 +178,7 @@ public class GameManager : MonoBehaviour
     }
 
     void ActivateMinigame(MinigameBase minigame){
+        Debug.Log($"Activating: {minigame.Title}");
         activeMinigame = minigame;
         activeMinigame.gameObject.SetActive(true);
         activeMinigame.ResetMinigame();

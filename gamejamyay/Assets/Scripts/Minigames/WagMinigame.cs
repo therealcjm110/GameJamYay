@@ -13,6 +13,8 @@ public class WagMinigame : MinigameBase
     public TextMeshProUGUI wagCountText;
     public TextMeshProUGUI statusText;
 
+    //public string Title = "Wag";
+
     private int wagCount = 0;
     private float lastX;
     private float wagOriginX;   // where wag started
