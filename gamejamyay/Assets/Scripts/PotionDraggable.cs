@@ -1,42 +1,41 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class DragItem : MonoBehaviour
+public class PotionDraggable : MonoBehaviour
 {
-    private bool isDragging = false;
-    private bool isInDropZone = false;
+    [Header("This potion's color name (Red, Yellow, or Blue)")]
+    public string colorName;
 
+    private bool isDragging = false;
+    private Vector3 startPosition;
     private Vector3 offset;
     private Rigidbody2D rb;
-
-    private Transform currentDropZone;
 
     void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        startPosition = transform.position;
     }
 
     void Update()
     {
-        if (Mouse.current == null || Camera.main == null)
-            return;
+        if (Mouse.current == null || Camera.main == null) return;
 
         Vector3 mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
         mouseWorldPos.z = 0f;
 
         if (Mouse.current.leftButton.wasPressedThisFrame)
         {
-            Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos);
+            Debug.Log(gameObject.name + " dropped at: " + transform.position);
 
+            Collider2D hit = Physics2D.OverlapPoint(mouseWorldPos);
             if (hit != null && hit.gameObject == gameObject)
             {
                 isDragging = true;
                 offset = transform.position - mouseWorldPos;
-
                 if (rb != null)
                 {
                     rb.linearVelocity = Vector2.zero;
-                    rb.angularVelocity = 0f;
                     rb.bodyType = RigidbodyType2D.Kinematic;
                 }
             }
@@ -50,33 +49,25 @@ public class DragItem : MonoBehaviour
         if (isDragging && Mouse.current.leftButton.wasReleasedThisFrame)
         {
             isDragging = false;
-
-            if (rb != null)
-                rb.bodyType = RigidbodyType2D.Dynamic;
-
-            if (isInDropZone && currentDropZone != null)
-            {
-                transform.position = currentDropZone.position;
-                Debug.Log(gameObject.name + " dropped in zone");
-            }
+            if (rb != null) rb.bodyType = RigidbodyType2D.Dynamic;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("DropZone"))
+        if (other.CompareTag("Bowl"))
         {
-            isInDropZone = true;
-            currentDropZone = other.transform;
+            // Snap to bowl
+            transform.position = other.transform.position;
+
+            // Tell the mixer
+            PotionMixer.Instance.PotionDropped(colorName);
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    public void ReturnToStart()
     {
-        if (other.CompareTag("DropZone"))
-        {
-            isInDropZone = false;
-            currentDropZone = null;
-        }
+        transform.position = startPosition;
+        if (rb != null) rb.bodyType = RigidbodyType2D.Dynamic;
     }
 }

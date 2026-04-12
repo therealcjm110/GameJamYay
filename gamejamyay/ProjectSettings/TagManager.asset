@@ -6,6 +6,9 @@ TagManager:
   tags:
   - Item
   - DropZone
+  - Lollipop
+  - Potion
+  - Bowl
   layers:
   - Default
   - TransparentFX
