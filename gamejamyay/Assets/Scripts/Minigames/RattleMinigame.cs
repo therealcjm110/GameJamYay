@@ -9,7 +9,7 @@ public class RattleMinigame : MinigameBase
     public float minRattleDistance = 80f;
 
     [Header("References")]
-    public Image charImage;     // image to swap
+    // public Image charImage;     // image to swap
     public Sprite leftSprite;   // left sprite
     public Sprite rightSprite;  // right sprite
     public TextMeshProUGUI rattleCountText;
@@ -61,8 +61,12 @@ public class RattleMinigame : MinigameBase
     }
 
     void SwapSprite(int direction){
-        if (charImage == null) return;
-        charImage.sprite = direction > 0 ? rightSprite : leftSprite;
+        if (leftSprite == null || rightSprite == null){
+            Debug.LogWarning("images not assigned! idiot!");
+            return;
+        }
+        leftSprite.SetActive(direction < 0);
+        rightSprite.SetActive(direction > 0);
     }
 
    void UpdateUI(){
@@ -88,8 +92,10 @@ public class RattleMinigame : MinigameBase
         started = false;
         minigameComplete = false;
 
-        if (charImage != null && leftSprite != null)
-            charImage.sprite = leftSprite;
+        if (leftSprite != null)
+            leftSprite.SetActive(true);
+        if (rightSprite != null) 
+            rightSprite.SetActive(false);
 
         UpdateUI();
     }

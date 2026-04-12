@@ -85,7 +85,11 @@ public class GameManager : MonoBehaviour
     private bool timerRunning;
     private string lastPlayedGame;  // no repeats (fingers crossed)
 
+    private bool gameStarted = false;
+
     public void StartGame(){
+        if (gameStarted) return;
+        gameStarted = true;
         Debug.Log("StartGame called");
 
         // temp bug fix
