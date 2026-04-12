@@ -4002,6 +4002,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1612196193}
   - component: {fileID: 1612196194}
+  - component: {fileID: 1612196195}
   m_Layer: 0
   m_Name: ScoldFinger_0
   m_TagString: Untagged
@@ -4018,7 +4019,7 @@ Transform:
   m_GameObject: {fileID: 1612196192}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.28, y: -2.13, z: 0}
+  m_LocalPosition: {x: -0.28, y: -3.05, z: 0}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -4083,6 +4084,22 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1612196195
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1612196192}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9fc585fae68d7634ca538f1389516490, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FingerPointer
+  flipSprite: 0
+  minAngle: -60
+  maxAngle: 60
+  angleOffset: 90
 --- !u!1 &1622984192
 GameObject:
   m_ObjectHideFlags: 0
@@ -4246,7 +4263,7 @@ Transform:
   m_GameObject: {fileID: 1651153727}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: -3.76, z: 0}
+  m_LocalPosition: {x: 0, y: -3.76, z: -1}
   m_LocalScale: {x: 2, y: 2, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -5123,10 +5140,10 @@ SceneRoots:
   - {fileID: 1827219760}
   - {fileID: 1303546354}
   - {fileID: 820305477}
-  - {fileID: 1139709164}
-  - {fileID: 23870073}
   - {fileID: 320896727}
   - {fileID: 413816878}
   - {fileID: 1992119144}
   - {fileID: 1474421075}
   - {fileID: 918117041}
+  - {fileID: 23870073}
+  - {fileID: 1139709164}
