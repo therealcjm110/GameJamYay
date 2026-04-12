@@ -83,7 +83,10 @@ public class GameManager : MonoBehaviour
     private float timer;
     private bool timerRunning;
     private string lastPlayedGame;  // no repeats (fingers crossed)
-
+    private void Start()
+    {
+        StartGame();
+    }
     public void StartGame(){
         Debug.Log("StartGame called");
 
@@ -97,12 +100,6 @@ public class GameManager : MonoBehaviour
         score = 0;
         speedTier = 0;
 
-        if (StartButton != null){
-            Debug.Log("Hiding button");
-            StartButton.SetActive(false);
-        } else {
-            Debug.Log("startButton is null. idiot.");
-        }
 
         //SetState(MGState.IDLE);
         UpdateUI();     // test
@@ -207,6 +204,7 @@ public class GameManager : MonoBehaviour
         yield return new WaitForSeconds(1.5f);
 
         DeactivateMinigame();
+        StopAllCoroutines();
 
         if (lives <= 0)
             SetState(MGState.GAMEOVER);

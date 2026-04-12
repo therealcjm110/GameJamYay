@@ -10,13 +10,23 @@ public class CheerUpMinigame : MinigameBase
     public GameObject cheerCard;
     public float cheerCardDelay = 1f;
 
+    [Header("Lollipop")]
+    public GameObject lollipop;
+
+    private Vector3 lollipopStartPos;
+    private bool startPosSaved = false;
     private bool completed = false;
 
     public override void StartMinigame(float speedMult)
     {
         completed = false;
 
-        // Enable interaction on lollipop
+        if (!startPosSaved && lollipop != null)
+        {
+            lollipopStartPos = lollipop.transform.position;
+            startPosSaved = true;
+        }
+
         if (lollipop != null)
             lollipop.SetActive(true);
     }
@@ -28,24 +38,15 @@ public class CheerUpMinigame : MinigameBase
         if (sadCreature != null) sadCreature.SetActive(true);
         if (happyCreature != null) happyCreature.SetActive(false);
         if (cheerCard != null) cheerCard.SetActive(false);
+
         if (lollipop != null)
         {
-            lollipop.SetActive(true);
-            lollipop.transform.position = lollipopStartPos;
+            lollipop.SetActive(false);
+            if (startPosSaved)
+                lollipop.transform.position = lollipopStartPos;
         }
     }
 
-    [Header("Lollipop")]
-    public GameObject lollipop;
-    private Vector3 lollipopStartPos;
-
-    void Awake()
-    {
-        if (lollipop != null)
-            lollipopStartPos = lollipop.transform.position;
-    }
-
-    // Called by FeedAtMouth when lollipop enters mouth zone
     public void OnLollipopFed()
     {
         if (completed) return;

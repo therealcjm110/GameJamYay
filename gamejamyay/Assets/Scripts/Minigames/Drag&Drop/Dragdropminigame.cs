@@ -10,17 +10,17 @@ public class DragDropMinigame : MinigameBase
     public float winCardDelay = 1f;
 
     private Vector3 itemStartPos;
+    private bool startPosSaved = false;
     private bool completed = false;
-
-    void Awake()
-    {
-        if (dragItem != null)
-            itemStartPos = dragItem.transform.position;
-    }
 
     public override void StartMinigame(float speedMult)
     {
         completed = false;
+        if (!startPosSaved && dragItem != null)
+        {
+            itemStartPos = dragItem.transform.position;
+            startPosSaved = true;
+        }
     }
 
     public override void ResetMinigame()
@@ -30,14 +30,14 @@ public class DragDropMinigame : MinigameBase
         if (dragItem != null)
         {
             dragItem.SetActive(true);
-            dragItem.transform.position = itemStartPos;
+            if (startPosSaved)
+                dragItem.transform.position = itemStartPos;
         }
 
         if (winCard != null)
             winCard.SetActive(false);
     }
 
-    // Called by DropZone when item lands correctly
     public void OnItemDropped()
     {
         if (completed) return;
