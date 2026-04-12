@@ -43,6 +43,7 @@ public class GameManager : MonoBehaviour
     }
 
     void Awake(){
+        // Debug.Log($"Awake called, Instance is null: {Instance == null}");
         // if (Instance != null && Instance != this){
         //     Debug.Log("test :D");
         //     Destroy(gameObject);    // kill duplicates
@@ -53,8 +54,8 @@ public class GameManager : MonoBehaviour
     
 
         //Debug.Log($"Minigames in pool: {minigames.Length}");
-        //foreach (var mg in minigames)
-        //    Debug.Log($" - {mg.Title} ({mg.gameObject.name})");
+        foreach (var mg in minigames)
+           Debug.Log($" - {mg.Title} active : ({mg.gameObject.activeSelf})");
     }
 
     [Header("Game Settings")]
