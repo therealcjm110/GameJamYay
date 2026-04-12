@@ -9,23 +9,19 @@ public class FeedAtMouth : MonoBehaviour
 
     [Header("Cheer Card")]
     public GameObject cheerCard;
-    public float cheerCardDelay = 1f; // seconds after eating before card appears
+    public float cheerCardDelay = 1f;
+    public float transitionDelay = 2f; // seconds after cheer card before moving on
 
     void Start()
     {
-        if (happyCreature != null)
-            happyCreature.SetActive(false);
-
-        if (cheerCard != null)
-            cheerCard.SetActive(false);
+        if (happyCreature != null) happyCreature.SetActive(false);
+        if (cheerCard != null) cheerCard.SetActive(false);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.CompareTag("Lollipop"))
-        {
             CheerUp(other.gameObject);
-        }
     }
 
     void CheerUp(GameObject lollipop)
@@ -35,19 +31,22 @@ public class FeedAtMouth : MonoBehaviour
 
         lollipop.SetActive(false);
 
-        StartCoroutine(ShowCheerCard());
+        StartCoroutine(ShowCheerCardThenTransition());
 
         Debug.Log("Experiment 3.012 is cheered up!");
     }
 
-    IEnumerator ShowCheerCard()
+    IEnumerator ShowCheerCardThenTransition()
     {
         yield return new WaitForSeconds(cheerCardDelay);
 
-        Debug.Log("Trying to show cheer card. cheerCard is null: " + (cheerCard == null));
-
         if (cheerCard != null)
             cheerCard.SetActive(true);
+
+        yield return new WaitForSeconds(transitionDelay);
+
+        if (SceneTransition.Instance != null)
+            SceneTransition.Instance.GoToNextScene();
     }
 
     void OnDrawGizmosSelected()
