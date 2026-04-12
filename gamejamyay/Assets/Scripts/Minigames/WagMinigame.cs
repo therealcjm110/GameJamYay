@@ -42,7 +42,7 @@ public class WagMinigame : MinigameBase
 
         // detect direction reversal
         if (newDirection != curDirection){
-            float wagDistance = Mathf.Abs(mouseX - lastX);
+            float wagDistance = Mathf.Abs(mouseX - wagOriginX);
 
             if (wagDistance >= minWagDistance){
                 wagCount++;

@@ -4,10 +4,6 @@ using System;
 public abstract class MinigameBase : MonoBehaviour
 {
 
-    void Start(){
-        GameManager.Instance.RegisterMinigame(this);
-    }
-
     public string Title;
     public float BaseTimeLimit = 5f;
 

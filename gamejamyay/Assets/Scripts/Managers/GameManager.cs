@@ -1,4 +1,6 @@
 using UnityEngine;
+using UnityEngine.UI;
+using TMPro;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,12 +43,18 @@ public class GameManager : MonoBehaviour
     }
 
     void Awake(){
-        if (Instance != null && Instance != this){
-            Destroy(gameObject);    // kill duplicates
-            return;
-        }
+        // if (Instance != null && Instance != this){
+        //     Debug.Log("test :D");
+        //     Destroy(gameObject);    // kill duplicates
+        //     return;
+        // }
         Instance = this;
-        DontDestroyOnLoad(gameObject);  // may not need for one scene
+
+    
+
+        //Debug.Log($"Minigames in pool: {minigames.Length}");
+        //foreach (var mg in minigames)
+        //    Debug.Log($" - {mg.Title} ({mg.gameObject.name})");
     }
 
     [Header("Game Settings")]
@@ -61,6 +69,10 @@ public class GameManager : MonoBehaviour
     // temporary
     [Header("UI")]
     public GameObject StartButton;
+    public TextMeshProUGUI livesText;
+    public TextMeshProUGUI roundText;
+    public TextMeshProUGUI scoreText;
+    public Slider timerSlider;
 
     private MinigameBase activeMinigame;
 
@@ -73,12 +85,27 @@ public class GameManager : MonoBehaviour
     private string lastPlayedGame;  // no repeats (fingers crossed)
 
     public void StartGame(){
-        StartButton.SetActive(false);
+        Debug.Log("StartGame called");
+
+        // temp bug fix
+        // minigames = FindObjectsByType<MinigameBase>(FindObjectsSortMode.None);
+        Debug.Log($"Minigames found: {minigames.Length}");
+
+        //StartButton.SetActive(false);     // add back once debugging is over (unless, yknow, if it aint broke...)
         lives = startingLives;
         round = 0;
         score = 0;
         speedTier = 0;
+
+        if (StartButton != null){
+            Debug.Log("Hiding button");
+            StartButton.SetActive(false);
+        } else {
+            Debug.Log("startButton is null. idiot.");
+        }
+
         //SetState(MGState.IDLE);
+        UpdateUI();     // test
         StartNextRound();
         
     }
@@ -89,10 +116,19 @@ public class GameManager : MonoBehaviour
         // calculate speed tier
         speedTier = Mathf.Min(round / roundsPerSpeedTier, speedMults.Length - 1);
 
+        UpdateUI();     // test
+
         MinigameBase chosen = PickMinigame();
         ActivateMinigame(chosen);
 
         //SetState(MGState.INTRO);
+    }
+
+    // testing ui
+    void UpdateUI(){
+        if (livesText != null) livesText.text = $"Lives: {lives}";
+        if (roundText != null) roundText.text = $"Round: {round}";
+        if (scoreText != null) scoreText.text = $"Score: {score}"; 
     }
 
     MinigameBase PickMinigame(){
@@ -103,13 +139,6 @@ public class GameManager : MonoBehaviour
             choices = minigames;
 
         return choices[Random.Range(0, choices.Length)];
-    }
-
-    public void RegisterMinigame(MinigameBase minigame){
-        activeMinigame = minigame;
-        activeMinigame.OnMGComplete += HandleMGComplete;
-        // proceed intro
-        StartCoroutine(IntroThenPlay());
     }
 
     IEnumerator IntroThenPlay(){
@@ -125,6 +154,9 @@ public class GameManager : MonoBehaviour
         timer -= Time.deltaTime;
         // update timer bar
 
+        if (timerSlider != null)
+            timerSlider.value = timer / (activeMinigame.BaseTimeLimit / speedMults[speedTier]); 
+
         if (timer <= 0){
             timerRunning = false;
             activeMinigame.ForceFailure();  // times up 
@@ -136,7 +168,7 @@ public class GameManager : MonoBehaviour
     }
 
     void HandleIntro(){
-        // screen transition
+        StartCoroutine(IntroThenPlay());
     }
 
     void HandleGameover(){
@@ -162,10 +194,15 @@ public class GameManager : MonoBehaviour
         if (success) score++;
         else lives--;
 
+        UpdateUI();     // test
         SetState(MGState.RESULT);
     }
 
-    IEnumerator HandleResult(){
+    void HandleResult(){
+        StartCoroutine(HandleResultRoutine());
+    }
+
+    IEnumerator HandleResultRoutine(){
         // show success/failure
         yield return new WaitForSeconds(1.5f);
 
@@ -182,8 +219,11 @@ public class GameManager : MonoBehaviour
         activeMinigame = minigame;
         activeMinigame.gameObject.SetActive(true);
         activeMinigame.ResetMinigame();
+
+        activeMinigame.OnMGComplete -= HandleMGComplete;
         activeMinigame.OnMGComplete += HandleMGComplete;
-        StartCoroutine(IntroThenPlay());
+
+        SetState(MGState.INTRO);
     }
 
     void DeactivateMinigame(){
