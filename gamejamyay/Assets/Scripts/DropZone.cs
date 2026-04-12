@@ -3,7 +3,7 @@ using UnityEngine;
 public class DropZone : MonoBehaviour
 {
     public string correctTag = "Item";
-    public PuzzleManager puzzleManager;
+    public DragDropMinigame minigame;
 
     private bool completed = false;
 
@@ -14,24 +14,15 @@ public class DropZone : MonoBehaviour
         if (other.CompareTag(correctTag))
         {
             completed = true;
+            Debug.Log(other.name + " dropped in zone");
 
-            Debug.Log(other.name + " entered the drop zone");
-            Debug.Log("Puzzle 1 complete");
-
-            if (puzzleManager != null)
-            {
-                puzzleManager.CompletePuzzle1();
-            }
+            if (minigame != null)
+                minigame.OnItemDropped();
         }
     }
 
-    private void OnTriggerStay2D(Collider2D other)
+    public void Reset()
     {
-        if (completed) return;
-
-        if (other.CompareTag(correctTag))
-        {
-            Debug.Log(other.name + " is inside the drop zone");
-        }
+        completed = false;
     }
 }

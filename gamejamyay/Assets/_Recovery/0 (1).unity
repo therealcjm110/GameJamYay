@@ -726,7 +726,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -2, y: -183}
+  m_AnchoredPosition: {x: -18, y: -257}
   m_SizeDelta: {x: 160, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &195363878
@@ -2892,23 +2892,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8455221149391927910, guid: 162c5dab0c63c1e48840973b827b2b34, type: 3}
       propertyPath: m_LocalScale.x
-      value: 23.339071
+      value: 7.3104515
       objectReference: {fileID: 0}
     - target: {fileID: 8455221149391927910, guid: 162c5dab0c63c1e48840973b827b2b34, type: 3}
       propertyPath: m_LocalScale.y
-      value: 27.283407
+      value: 8.545928
       objectReference: {fileID: 0}
     - target: {fileID: 8455221149391927910, guid: 162c5dab0c63c1e48840973b827b2b34, type: 3}
       propertyPath: m_LocalScale.z
-      value: 54.34942
+      value: 17.023762
       objectReference: {fileID: 0}
     - target: {fileID: 8455221149391927910, guid: 162c5dab0c63c1e48840973b827b2b34, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 25
+      value: 15.503679
       objectReference: {fileID: 0}
     - target: {fileID: 8455221149391927910, guid: 162c5dab0c63c1e48840973b827b2b34, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 164
+      value: 50.54971
       objectReference: {fileID: 0}
     - target: {fileID: 8455221149391927910, guid: 162c5dab0c63c1e48840973b827b2b34, type: 3}
       propertyPath: m_LocalPosition.z
@@ -3093,7 +3093,7 @@ Transform:
   m_GameObject: {fileID: 1020997871}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 19, y: 34.59675, z: 0}
+  m_LocalPosition: {x: 44.56297, y: 34.59675, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -3218,14 +3218,13 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1046256407}
-  - component: {fileID: 1046256408}
   m_Layer: 0
-  m_Name: Drag&DropMinigame
+  m_Name: Puzzle1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1046256407
 Transform:
   m_ObjectHideFlags: 0
@@ -3235,31 +3234,14 @@ Transform:
   m_GameObject: {fileID: 1046256406}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 193, y: 109.3, z: 0}
+  m_LocalPosition: {x: -21.77825, y: -37.4948, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1020997872}
   - {fileID: 633296214}
-  m_Father: {fileID: 0}
+  - {fileID: 1020997872}
+  m_Father: {fileID: 1536143010}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1046256408
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1046256406}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 5a75a0a2c5949fb438d42b6498ca3d70, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::DragDropMinigame
-  Title: Drag&Drop
-  BaseTimeLimit: 5
-  dragItem: {fileID: 633296209}
-  winCard: {fileID: 0}
-  winCardDelay: 1
 --- !u!1 &1105025795
 GameObject:
   m_ObjectHideFlags: 0
@@ -3487,7 +3469,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3ea5ffec86e6a94428fe7cb7a97879d7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FeedAtMouth
-  minigame: {fileID: 1134482772}
+  sadCreature: {fileID: 541275630}
+  happyCreature: {fileID: 1519760291}
+  cheerCard: {fileID: 986559213}
+  cheerCardDelay: 1
+  transitionDelay: 2
 --- !u!58 &1120918138
 CircleCollider2D:
   m_ObjectHideFlags: 0
@@ -4685,6 +4671,56 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1536143009
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1536143010}
+  - component: {fileID: 1536143011}
+  m_Layer: 0
+  m_Name: Drag&DropMinigame
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &1536143010
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536143009}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -6.82543, y: -0.05491, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 1046256407}
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1536143011
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1536143009}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5a75a0a2c5949fb438d42b6498ca3d70, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::DragDropMinigame
+  Title: Drag&Drop
+  BaseTimeLimit: 5
+  dragItem: {fileID: 633296209}
+  winCard: {fileID: 0}
+  winCardDelay: 1
 --- !u!1 &1546584474
 GameObject:
   m_ObjectHideFlags: 0
@@ -4805,8 +4841,8 @@ Transform:
   m_GameObject: {fileID: 1548979600}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -189.6, y: -122.6, z: 0}
-  m_LocalScale: {x: 38.104614, y: 38.104614, z: 38.104614}
+  m_LocalPosition: {x: 38.9, y: -29.5, z: 0}
+  m_LocalScale: {x: 15.190199, y: 15.190199, z: 15.190199}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1020997872}
@@ -4824,7 +4860,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropZone
   correctTag: Item
-  minigame: {fileID: 0}
+  puzzleManager: {fileID: 0}
 --- !u!61 &1548979603
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -5502,8 +5538,8 @@ MonoBehaviour:
   - 2
   minigames:
   - {fileID: 1303546353}
+  - {fileID: 1536143011}
   - {fileID: 1134482772}
-  - {fileID: 1046256408}
   StartButton: {fileID: 803741}
   livesText: {fileID: 1170390684}
   roundText: {fileID: 444566486}
@@ -5553,8 +5589,8 @@ Transform:
   m_GameObject: {fileID: 1852748498}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 230.3, y: -119.5711, z: 0}
-  m_LocalScale: {x: 42.22986, y: 39.422184, z: 26.531294}
+  m_LocalPosition: {x: -102.8, y: -29.6, z: 0}
+  m_LocalScale: {x: 28.585836, y: 17.959312, z: 17.959312}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1020997872}
@@ -5599,7 +5635,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::DropZone
   correctTag: Item
-  minigame: {fileID: 0}
+  puzzleManager: {fileID: 0}
 --- !u!61 &1852748502
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -6310,5 +6346,5 @@ SceneRoots:
   - {fileID: 1992119144}
   - {fileID: 1474421075}
   - {fileID: 918117041}
-  - {fileID: 1046256407}
+  - {fileID: 1536143010}
   - {fileID: 1134482773}
