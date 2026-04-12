@@ -1,4 +1,6 @@
 using UnityEngine;
+using TMPro;
+using System.Collections;
 
 public class PotionMixer : MonoBehaviour
 {
@@ -7,14 +9,16 @@ public class PotionMixer : MonoBehaviour
     [Header("Target Color Display")]
     public SpriteRenderer finalPotionUnderlay;
 
+    [Header("Prompt Text")]
+    public TMP_Text promptText;
+
     [Header("Win Card")]
     public GameObject mixTitleCard;
     public float cardDelay = 1f;
+    public float transitionDelay = 2f; // seconds after win card before moving on
 
-  
     public enum MixColor { Orange, Green, Purple }
     private MixColor targetColor;
-
 
     private string slot1 = null;
     private string slot2 = null;
@@ -37,7 +41,11 @@ public class PotionMixer : MonoBehaviour
         targetColor = (MixColor)Random.Range(0, 3);
         Debug.Log("Target color: " + targetColor);
 
-        
+        if (promptText != null)
+        {
+            string hex = ColorUtility.ToHtmlStringRGB(GetColor(targetColor));
+            promptText.text = "Make a <color=#" + hex + ">" + targetColor.ToString() + "</color> potion!";
+        }
     }
 
     public void PotionDropped(string colorName)
@@ -70,14 +78,13 @@ public class PotionMixer : MonoBehaviour
             return;
         }
 
-       
         if (finalPotionUnderlay != null)
             finalPotionUnderlay.color = GetColor(result.Value);
 
         if (result.Value == targetColor)
         {
             Debug.Log("Correct! Mixed: " + result.Value);
-            StartCoroutine(ShowWinCard());
+            StartCoroutine(ShowWinCardThenTransition());
         }
         else
         {
@@ -121,10 +128,16 @@ public class PotionMixer : MonoBehaviour
         }
     }
 
-    System.Collections.IEnumerator ShowWinCard()
+    IEnumerator ShowWinCardThenTransition()
     {
         yield return new WaitForSeconds(cardDelay);
+
         if (mixTitleCard != null)
             mixTitleCard.SetActive(true);
+
+        yield return new WaitForSeconds(transitionDelay);
+
+        if (SceneTransition.Instance != null)
+            SceneTransition.Instance.GoToNextScene();
     }
 }
