@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 public enum MGState{
-    IDLE,       // 
+    // IDLE,       // 
     INTRO,      // show instructions (wag, drag, etc)
     PLAYING,    // playing mg
     RESULT,     // show win/loss
@@ -24,9 +24,9 @@ public class GameManager : MonoBehaviour
         Debug.Log($"State: {curState} -> {newState}");
         curState = newState;
         switch(newState){
-            case MGState.IDLE:
-                HandleIdle();
-                break;
+            // case MGState.IDLE:
+            //     HandleIdle();
+            //     break;
             case MGState.INTRO:
                 HandleIntro();
                 break;
@@ -164,9 +164,9 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    void HandleIdle(){
-        StartNextRound();
-    }
+    // void HandleIdle(){
+    //     StartNextRound();
+    // }
 
     void HandleIntro(){
         StartCoroutine(IntroThenPlay());
